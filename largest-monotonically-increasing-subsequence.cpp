@@ -82,6 +82,17 @@ struct Tree {
     __traverse(root, 1);
   }
 
+  // New method to print all nodes in the tree
+  void printAllNodes() {
+    if(isEmpty()) {
+      cout << "Tree is empty." << endl;
+      return;
+    }
+
+    cout << "Tree Nodes:" << endl;
+    __printAllNodes(root, 0);
+  }
+
   // Method to print the longest subsequence
   void printLongestSubsequence() {
     if(!longestNode) return;
@@ -114,6 +125,29 @@ struct Tree {
       newNode->length = 1;
       
       return newNode;
+    }
+
+    // Recursive method to print all nodes with indentation
+    void __printAllNodes(Node* node, int depth) {
+      if(node == NULL)
+        return;
+
+      // Print indentation
+      for(int i = 0; i < depth; i++) {
+        cout << "  ";
+      }
+
+      // Print node details
+      cout << "Value: " << node->value 
+           << ", Index: " << node->index 
+           << ", Length: " << node->length 
+           << ", Children: " << node->child.size() 
+           << endl;
+
+      // Recursively print children
+      for(Node* childNode : node->child) {
+        __printAllNodes(childNode, depth + 1);
+      }
     }
 
     int __getNodeHeight(Node* node) {
@@ -169,6 +203,9 @@ int main() {
 
   // Find the longest monotonically increasing subsequence
   newTree.traverse();
+
+  // Print all nodes in the tree
+  newTree.printAllNodes();
 
   // Print the longest subsequence
   newTree.printLongestSubsequence();
